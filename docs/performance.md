@@ -5,7 +5,7 @@ dataset loaded as described in the README (about 1.45 million rows across nine
 tables, of which 1 million are geolocation). Timings are the median of several
 `EXPLAIN (ANALYZE)` runs on a warm cache. At this data size every query
 finishes in under a second, so these notes are about reading plans and
-verifying index usage, and the honest summary is that indexes change little
+verifying index usage, and the short summary is that indexes change little
 here.
 
 ## Timings (median of 3 runs)

@@ -7,7 +7,7 @@
 --   * Customers are identified by customer_unique_id.
 --   * Recency is measured against the day after the analysis window ends
 --     (2018-09-01), so it does not depend on when the query is run.
---   * Honesty note on frequency: 96.9 percent of customers in the window
+--   * Note on frequency: 96.9 percent of customers in the window
 --     bought exactly once, so NTILE on frequency would split identical
 --     one-purchase customers into arbitrary quintiles. Frequency is scored
 --     with a direct rule instead: 1 order = 1, 2 orders = 2, 3 or more = 3.

@@ -16,14 +16,16 @@ August 2018 (the analysis window; the sparse edge months of 2016 and late
 
 - R$ 15.37 million of delivered revenue across 96,211 orders and 93,104
   customers in 20 months.
-- The best month was November 2017 (Black Friday) with R$ 1.15 million,
-  up 53.6 percent on October. Monthly revenue then plateaued around
-  R$ 1.0 to 1.13 million through 2018.
+- The best month was November 2017 with R$ 1.15 million, up 53.6 percent
+  on October; its highest-revenue day was November 24, Black Friday.
+  Monthly revenue then plateaued around R$ 1.0 to 1.13 million through
+  2018.
 - Repeat purchase is rare: 3.0 percent of customers ordered more than once
   in the window, and on average 0.48 percent of a cohort orders again in the
   month after the first purchase. No cohort cell after month 0 exceeds 0.72
   percent.
-- The two high-value one-purchase RFM segments hold 30.1 percent of
+- The "Recent high value" and "Lapsed high value" RFM segments (customers
+  who bought once and spent in the top two quintiles) hold 30.1 percent of
   customers and 55.6 percent of revenue.
 - Delivery timing tracks review scores closely: orders 8 or more days late
   average a 1.70 review score with 69.8 percent 1-star reviews, versus 4.32
@@ -119,8 +121,8 @@ key: 278 customer prefixes have no geolocation row.
 
 ## Setup and run
 
-Prerequisites: Docker (Desktop on Windows/macOS), Python 3.12 or newer
-(built and tested on 3.14), and the dataset (next section).
+Prerequisites: Docker (Desktop on Windows/macOS), Python 3.14 (the version
+this was built and tested on), and the dataset (next section).
 
 Windows (PowerShell):
 
@@ -185,7 +187,7 @@ pinned down by tests so a regression would fail the suite.
   person-level key is `customer_unique_id` (96,096 distinct values), and
   every customer-level analysis uses it. Computing retention on
   `customer_id` would return exactly zero.
-- Repeat purchasing is genuinely rare (3.0 percent of customers in the
+- Repeat purchasing is rare (3.0 percent of customers in the
   window). The retention and RFM results report this as it is; the RFM query
   documents why frequency quintiles would be meaningless here and scores
   frequency with a direct rule instead of `NTILE`.
@@ -237,7 +239,7 @@ pinned down by tests so a regression would fail the suite.
 [docs/performance.md](docs/performance.md) has `EXPLAIN ANALYZE` notes for
 the two heaviest queries, including a measured before and after for the one
 index that changes a timing (about 13 percent on the review deduplication)
-and an honest account of the indexes that change nothing at this data size.
+and notes on the indexes that change nothing at this data size.
 
 ## Repository layout
 

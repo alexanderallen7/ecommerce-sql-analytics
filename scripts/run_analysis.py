@@ -149,6 +149,7 @@ def build_sections(r):
 
     rolling = r["04"]
     peak_roll = rolling.loc[rolling["rolling_30d_revenue"].idxmax()]
+    peak_day = rolling.loc[rolling["revenue"].idxmax(), "day"]
 
     cats = r["05"]
     leader_counts = cats[cats["revenue_rank"] == 1]["category"].value_counts()
@@ -169,8 +170,10 @@ def build_sections(r):
                 f"Revenue grew from R$ {monthly.iloc[0]['revenue'] / 1e3:,.0f} "
                 f"thousand in January 2017 to a peak of R$ "
                 f"{peak['revenue'] / 1e6:.2f} million in "
-                f"{peak['purchase_month']:%B %Y}, the Black Friday month, up "
-                f"{peak['revenue_mom_pct']} percent on October. Through 2018 "
+                f"{peak['purchase_month']:%B %Y}, up "
+                f"{peak['revenue_mom_pct']} percent on October; the window's "
+                f"highest-revenue day was {peak_day:%d %B %Y}, Black Friday. "
+                f"Through 2018 "
                 f"monthly revenue settled around R$ 1.0 to 1.13 million with no "
                 f"further growth. Average order value stayed between R$ "
                 f"{aov_min} and R$ {aov_max} the whole time, so the growth in "

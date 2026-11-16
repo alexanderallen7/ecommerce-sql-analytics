@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Olist E-Commerce SQL Analytics</title>
+<style>
+  :root {
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --blue: #2a78d6;
+    --border: rgba(11, 11, 11, 0.10);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 40px 16px 64px; }
+  header h1 { font-size: 26px; margin: 0 0 4px; }
+  header p.sub { color: var(--ink-2); margin: 0 0 8px; }
+  header p.meta { color: var(--muted); font-size: 13px; margin: 0; }
+  section.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-top: 22px;
+  }
+  h2 { font-size: 18px; margin: 0 0 6px; }
+  p.question { color: var(--ink-2); font-style: italic; margin: 0 0 14px; }
+  .findings ul { margin: 8px 0 0; padding-left: 20px; }
+  .findings li { margin: 6px 0; }
+  .findings strong { font-variant-numeric: tabular-nums; }
+  img.chart { width: 100%; height: auto; display: block; margin: 6px 0 12px; }
+  p.comment { margin: 6px 0 0; }
+  table { border-collapse: collapse; width: 100%; margin: 6px 0 12px; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--grid); }
+  th { color: var(--ink-2); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 28px; }
+  footer a { color: var(--blue); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Olist E-Commerce SQL Analytics</h1>
+    <p class="sub">Seven business questions answered in PostgreSQL window
+      functions and CTEs, on the public Olist Brazilian e-commerce dataset.</p>
+    <p class="meta">Analysis window: {{ window_label }}. Revenue means item
+      price plus freight on delivered orders. Generated {{ generated_on }} by
+      scripts/run_analysis.py; every number on this page is query output.</p>
+  </header>
+
+  <section class="card findings">
+    <h2>Key findings</h2>
+    <ul>
+      {% for f in findings %}<li>{{ f }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {% for s in sections %}
+  <section class="card">
+    <h2>{{ loop.index }}. {{ s.title }}</h2>
+    <p class="question">{{ s.question }}</p>
+    {% if s.chart %}<img class="chart" alt="{{ s.alt }}" src="data:image/png;base64,{{ s.chart }}">{% endif %}
+    {% if s.table %}
+    <table>
+      <thead><tr>{% for h in s.table.header %}<th {% if h.num %}class="num"{% endif %}>{{ h.label }}</th>{% endfor %}</tr></thead>
+      <tbody>
+        {% for row in s.table.rows %}<tr>{% for cell in row %}<td {% if cell.num %}class="num"{% endif %}>{{ cell.value }}</td>{% endfor %}</tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+    <p class="comment">{{ s.comment }}</p>
+  </section>
+  {% endfor %}
+
+  <footer>
+    Data: <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce">Olist
+    Brazilian E-Commerce Public Dataset</a> (CC BY-NC-SA 4.0). The SQL behind each
+    section is in sql/queries/, one file per question.
+  </footer>
+</main>
+</body>
+</html>

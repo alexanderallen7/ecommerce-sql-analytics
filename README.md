@@ -64,14 +64,14 @@ erDiagram
     }
     orders {
         text order_id PK
-        text customer_id FK, UK
+        text customer_id FK "unique per order"
         text order_status
         timestamp order_purchase_timestamp
         timestamp order_delivered_customer_date
         timestamp order_estimated_delivery_date
     }
     order_items {
-        text order_id PK, FK
+        text order_id PK "composite key, FK to orders"
         int order_item_id PK
         text product_id FK
         text seller_id FK
@@ -79,14 +79,14 @@ erDiagram
         numeric freight_value
     }
     order_payments {
-        text order_id PK, FK
+        text order_id PK "composite key, FK to orders"
         int payment_sequential PK
         text payment_type
         numeric payment_value
     }
     order_reviews {
-        text review_id PK
-        text order_id PK, FK
+        text review_id PK "composite key"
+        text order_id PK "composite key, FK to orders"
         int review_score
     }
     products {

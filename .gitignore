@@ -1,0 +1,14 @@
+# Secrets
+.env
+
+# Data (not redistributed; see README for how to download it)
+data/raw/*
+!data/raw/.gitkeep
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
